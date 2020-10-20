@@ -38,39 +38,43 @@ app.use(morgan('common'));
 const movies = require('./movies-data-small');
 
 app.get('/movie', (req, res, next) => {
-    
+    let results = movies;
+
     // By Genre
 
-        const { genre = '' } = req.query;
+    const { genre = '' } = req.query;
 
-        let results = movies
-            .filter(movie =>
-                movie
-                    .genre
-                    .toLowerCase()
-                    .includes(genre.toLowerCase())   
+    if (req.query.genre) {
+        results = results.filter(movie =>
+            movie
+                .genre
+                .toLowerCase()
+                .includes(genre.toLowerCase())   
         );
+    }
 
     // By Country
 
     const { country = '' } = req.query;
 
-    results = movies
-        .filter(movie =>
+    if (req.query.country) {
+        results = results.filter(movie =>
             movie
                 .country
                 .toLowerCase()
-                .includes(country.toLowerCase())
+                .includes(country.toLowerCase())   
         );
+    }
                 
     // By Average Vote
 
-    const { average = '' } = req.query;
+    const { average = '' } = req.query;    
 
-    results = movies
-        .filter(movie =>
-        movie.avg_vote >= parseInt(average)
-    );
+    if (average) {
+        results = results.filter(movie =>
+            movie.avg_vote >= Number(average)
+        );
+    }        
     
     res
         .json(results);
