@@ -28,14 +28,32 @@ to meet the following requirements.
 */
 
 
-
+require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
+const helmet = require('helmet');
+const cors = require('cors');
 
 const app = express();
 
 app.use(morgan('common'));
+app.use(helmet());
+app.use(cors());
 const movies = require('./movies-data-small');
+
+app.use(function validateBearerToken(req, res, next) {
+    const apiToken = process.env.API_TOKEN;
+    const authToken = req.get('Authorization')
+
+    console.log('validate bearer token middleware');
+
+    if (!authToken || authToken.split(' ')[1] !== apiToken) {
+        return res.status(401).json({ error: 'Unauthorized request' })
+    }
+
+    // move to the next middleware
+    next()
+});
 
 app.get('/movie', (req, res, next) => {
     let results = movies;
