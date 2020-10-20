@@ -38,19 +38,44 @@ app.use(morgan('common'));
 const movies = require('./movies-data-small');
 
 app.get('/movie', (req, res, next) => {
-    const { search = '' } = req.query;
+    
+    // By Genre
 
-    let results = movies
+        const { genre = '' } = req.query;
+
+        let results = movies
+            .filter(movie =>
+                movie
+                    .genre
+                    .toLowerCase()
+                    .includes(genre.toLowerCase())   
+        );
+
+    // By Country
+
+    const { country = '' } = req.query;
+
+    results = movies
         .filter(movie =>
             movie
-                .genre
+                .country
                 .toLowerCase()
-                .includes(search.toLowerCase())   
+                .includes(country.toLowerCase())
         );
+                
+    // By Average Vote
+
+    const { average = '' } = req.query;
+
+    results = movies
+        .filter(movie =>
+        movie.avg_vote >= parseInt(average)
+    );
     
     res
         .json(results);
-})
+});
+
 
 app.listen(9090, () => {
     console.log(`Server started on PORT 9090`);
