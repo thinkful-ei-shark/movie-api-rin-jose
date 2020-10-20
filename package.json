@@ -1,0 +1,29 @@
+{
+  "name": "movie-api-rin-jose",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app",
+    "dev": "nodemon app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thinkful-ei-shark/movie-api-rin-jose.git"
+  },
+  "keywords": [],
+  "author": "Rin and Jose",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thinkful-ei-shark/movie-api-rin-jose/issues"
+  },
+  "homepage": "https://github.com/thinkful-ei-shark/movie-api-rin-jose#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  }
+}
